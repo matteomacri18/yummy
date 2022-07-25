@@ -3,7 +3,7 @@
 * Navigation Drawer
 
 ### Project Overview
-Yummy, is a food recipe app. It allows users to search through tons of recipes, also it lets the users know the main ingredients and the similar raccomandation recipes. The app fetchs the data from Spoonacular recipe and food API by using Retrofit2.
+Yummy, is a food recipe app. It allows users to search through tons of recipes, also it lets the users know the main ingredients and the similar recomandation recipes. The app fetchs the data from Spoonacular recipe and food API by using Retrofit2.
 
 ### Features
 * RecyclerView
