@@ -3,16 +3,12 @@ package com.matteomacri.gnam
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.HorizontalScrollView
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.matteomacri.gnam.adapters.RecipesAdapter
 import com.matteomacri.gnam.adapters.SimilarRecipesAdapter
 import com.matteomacri.gnam.databinding.ActivityDetailRecipesBinding
 import com.matteomacri.gnam.models.ingredients.ExtendedIngredient
 import com.matteomacri.gnam.models.ingredients.Ingredients
-import com.matteomacri.gnam.models.similarrecipes.SimilarRecipes
 import com.matteomacri.gnam.models.similarrecipes.SimilarRecipesItem
 import com.matteomacri.gnam.services.RecipesApiService
 import kotlinx.coroutines.*
@@ -55,16 +51,16 @@ class DetailRecipesActivity : AppCompatActivity() {
                     recipeInformation = _recipeinformation
                 }.await()
 
-                // call to the second APIs, async because the first will cutted off when started of the
+                // call to the second APIs, async because the first will be cutted out when started of the
                 // second one
-//                val similarRecipes: SimilarRecipes ?= null
-//                async {
-//                    val response = RecipesApiService.getRetrofitClient()
-//                    val _similarRecipes = response.getSimilarRecipes(id)
-//                    for (similar in _similarRecipes.result) {
-//                        addSimilarRecipesToList(similar)
-//                    }
-//                }.await()
+                async {
+                    val response = RecipesApiService.getRetrofitClient()
+                    val _similarRecipes = response.getSimilarRecipes(id)
+                    for (recipe in _similarRecipes){
+                        Log.i(TAG, recipe.toString())
+                        addSimilarRecipesToList(recipe)
+                    }
+                }.await()
 
                 withContext(Dispatchers.Main) {
                     binding.apply {
@@ -76,7 +72,7 @@ class DetailRecipesActivity : AppCompatActivity() {
                         tvHealthScore.text = recipeInformation?.healthScore.toString()
                     }
 
-                    //setRecyclerView(binding)
+                    setRecyclerView(binding)
                 }
 
             } catch (e: Exception) {
@@ -85,20 +81,20 @@ class DetailRecipesActivity : AppCompatActivity() {
         }
     }
 
-//    private fun setRecyclerView(binding: ActivityDetailRecipesBinding) {
-//        binding.rvSimilarRecipes.apply {
-//            layoutManager = LinearLayoutManager(
-//                this@DetailRecipesActivity,
-//                LinearLayoutManager.HORIZONTAL,
-//                true
-//            )
-//            adapter = SimilarRecipesAdapter(this@DetailRecipesActivity, similarRecipesList)
-//        }
-//    }
+    private fun setRecyclerView(binding: ActivityDetailRecipesBinding) {
+        binding.rvSimilarRecipes.apply {
+            layoutManager = LinearLayoutManager(
+                this@DetailRecipesActivity,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            adapter = SimilarRecipesAdapter(this@DetailRecipesActivity, similarRecipesList)
+        }
+    }
 
-//    private fun addSimilarRecipesToList(similarRecipes: SimilarRecipesItem) {
-//        similarRecipesList.add(similarRecipes)
-//    }
+    private fun addSimilarRecipesToList(similarRecipes: SimilarRecipesItem) {
+        similarRecipesList.add(similarRecipes)
+    }
 
     private fun addIngredientToList(ingredient: ExtendedIngredient) {
         ingredientsList.add(ingredient)

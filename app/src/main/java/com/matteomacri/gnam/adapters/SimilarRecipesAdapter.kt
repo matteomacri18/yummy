@@ -7,9 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.matteomacri.gnam.DetailRecipesActivity
 import com.matteomacri.gnam.databinding.ItemRecipeBinding
 import com.matteomacri.gnam.models.similarrecipes.SimilarRecipesItem
+
+private var IMAGE = ""
 
 class SimilarRecipesAdapter(val context: Context, val similarRecipesList: List<SimilarRecipesItem>):
 RecyclerView.Adapter<SimilarRecipesAdapter.ViewHolder>(){
@@ -21,6 +24,7 @@ RecyclerView.Adapter<SimilarRecipesAdapter.ViewHolder>(){
                 val intent = Intent(context, DetailRecipesActivity::class.java)
                     .putExtra("ID", similarRecipesList[position].id)
                     .putExtra("TITLE", similarRecipesList[position].title)
+                    .putExtra("IMAGE", IMAGE)
                 ContextCompat.startActivity(itemView.context, intent, null)
             }
         }
@@ -34,6 +38,10 @@ RecyclerView.Adapter<SimilarRecipesAdapter.ViewHolder>(){
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
             tvTitle.text = similarRecipesList[position].title
+            IMAGE = "https://spoonacular.com/recipeImages/"+similarRecipesList[position].id+"-556x370.jpg"
+            Glide.with(context)
+                .load(IMAGE)
+                .into(ivThumbnail)
         }
     }
 
