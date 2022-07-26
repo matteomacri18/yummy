@@ -1,6 +1,4 @@
-# Yummy! -- IN PROGRESS...
-### Missing Features
-* Navigation Drawer
+# Yummy!
 
 ### Project Overview
 Yummy, is a food recipe app, it allows users to search through tons of recipes where the user can choose a recipe and remake it by himself.
