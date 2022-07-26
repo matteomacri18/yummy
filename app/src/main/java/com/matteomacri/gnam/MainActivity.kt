@@ -1,15 +1,19 @@
 package com.matteomacri.gnam
 
+import android.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.navigation.NavigationView
 import com.matteomacri.gnam.adapters.RecipesAdapter
 import com.matteomacri.gnam.databinding.ActivityMainBinding
 import com.matteomacri.gnam.models.Recipe
-import com.matteomacri.gnam.models.ingredients.ExtendedIngredient
 import com.matteomacri.gnam.services.RecipesApiService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,15 +26,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val recipesList = mutableListOf<Recipe>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        fetchRecipes(binding)
-    }
-
 
     private fun fetchRecipes(binding: ActivityMainBinding) {
         CoroutineScope(Dispatchers.IO).launch {
