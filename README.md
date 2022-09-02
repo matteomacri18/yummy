@@ -11,7 +11,6 @@ Yummy, is a food recipe app, it allows users to search through tons of recipes w
 * CardView
 * Intents
 * Toolbar
-* Navigation Drawer
 * Retrofit2
 * ViewBinding
 * Parallel Coroutines Calls
